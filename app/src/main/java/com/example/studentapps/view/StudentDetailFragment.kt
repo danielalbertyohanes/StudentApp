@@ -37,13 +37,12 @@ class StudentDetailFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.studentLD.observe(viewLifecycleOwner, Observer { student ->
-            student.let {
-                binding.txtID.setText(student.id)
-                binding.txtName.setText(student.name)
-                binding.txtBod.setText(student.dob)
-                binding.txtPhone.setText(student.phone)
-            }
+        viewModel.studentLD.observe(viewLifecycleOwner, Observer
+        {
+            binding.txtID.setText(it.id)
+            binding.txtName.setText(it.name)
+            binding.txtBod.setText(it.dob)
+            binding.txtPhone.setText(it.phone)
         })
     }
 }
