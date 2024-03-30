@@ -42,16 +42,14 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
             Request.Method.GET, url,
             {// ini jika volly nya succses maka ini yang di tampilkan
 //                loadingLD.value = false
-//                Log.d("show_volley", it)
+                Log.d("show_volley", it)
 
                 val sType = object : TypeToken<List<Student>>() { }.type // objeck untuk gson nyya
                 val result = Gson().fromJson<List<Student>>(it, sType) // ini variable penampung nya
                 studentsLD.value = result as ArrayList<Student>?// ini bakalan di convert json string nya menjadi list of student
                 loadingLD.value = false
 
-                Log.d("show_volley", result.toString())
-
-
+                //Log.d("show_volley", result.toString())
             },
             {// ini jika volly nya gagal
                 Log.d("show_volley", it.toString())
