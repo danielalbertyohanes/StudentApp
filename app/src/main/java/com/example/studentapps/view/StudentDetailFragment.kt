@@ -1,5 +1,6 @@
 package com.example.studentapps.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -32,10 +33,11 @@ class StudentDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val sharedPreferences = requireContext().getSharedPreferences("student_prefs", Context.MODE_PRIVATE)
+        val studentId = sharedPreferences.getString("studentId", null)
 
-        val studentId = arguments?.getString("studentId") ?: ""
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        viewModel.fetch(studentId)
+        viewModel.fetch(studentId.toString())
 
         observeViewModel()
     }
