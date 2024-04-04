@@ -1,7 +1,9 @@
 package com.example.studentapps.view
 
 import android.content.Context
+
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +17,13 @@ import com.example.studentapps.databinding.FragmentStudentDetailBinding
 import com.example.studentapps.viewmodel.DetailViewModel
 import com.example.studentapps.viewmodel.ListViewModel
 import com.example.studentapps.util.loadImage
+import java.util.concurrent.TimeUnit
+import android.Manifest
+import android.annotation.SuppressLint
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
+
 
 class StudentDetailFragment : Fragment() {
 
@@ -42,6 +51,7 @@ class StudentDetailFragment : Fragment() {
         observeViewModel()
     }
 
+    @SuppressLint("CheckResult")
     private fun observeViewModel() {
 
         viewModel.studentLD.observe(viewLifecycleOwner, Observer {
@@ -50,7 +60,19 @@ class StudentDetailFragment : Fragment() {
             binding.txtBod.setText(it.dob)
             binding.txtPhone.setText(it.phone)
             binding.imageViewDetail.loadImage(viewModel.studentLD.value?.photoUrl, binding.progressBarDetail)
+            var student = it
 
+            binding.btnUpdate?.setOnClickListener {
+                Observable.timer(5, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        Log.d("Messages", "five seconds")
+                        MainActivity.showNotification(student.name.toString(),
+                            "A new notification created",
+                            R.drawable.baseline_person_add_24)
+                    }
+            }
         })
     }
 }

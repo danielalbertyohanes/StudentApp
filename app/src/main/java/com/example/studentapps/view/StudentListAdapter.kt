@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -14,6 +15,9 @@ import com.example.studentapps.R
 import com.example.studentapps.databinding.StudentListItemBinding
 import com.example.studentapps.model.Student
 import com.example.studentapps.util.loadImage
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
+import java.lang.Exception
 
 
 class StudentListAdapter(val studentList:ArrayList<Student>):RecyclerView.Adapter<StudentListAdapter.StudentViewHolder>() {
@@ -42,6 +46,25 @@ class StudentListAdapter(val studentList:ArrayList<Student>):RecyclerView.Adapte
             val action = StudentListFragmentDirections.actionStudentDetailFragment()
             Navigation.findNavController(it).navigate(action)
         }
+
+        val picasso = Picasso.Builder(holder.itemView.context)
+        picasso.listener { picasso, uri, exception ->
+            exception.printStackTrace()
+        }
+
+        picasso.build().load(studentList[position].photoUrl).into(holder.binding.imageView, object :Callback{
+            override fun onSuccess() {
+                holder.binding.progressBar.visibility = View.INVISIBLE
+                holder.binding.imageView.visibility = View.VISIBLE
+            }
+
+            override fun onError(e: Exception?) {
+                Log.e("Picasso_error", "ERROR")
+            }
+
+        })
+
+
         var imageView = holder.itemView.findViewById<ImageView>(R.id.imageView)
         var progressBar = holder.itemView.findViewById<ProgressBar>(R.id.progressBar)
         imageView.loadImage(studentList[position].photoUrl, progressBar)
