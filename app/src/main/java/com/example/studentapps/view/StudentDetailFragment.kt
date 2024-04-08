@@ -42,9 +42,10 @@ class StudentDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sharedPreferences = requireContext().getSharedPreferences("student_prefs", Context.MODE_PRIVATE)
-        val studentId = sharedPreferences.getString("studentId", null)
+//        val sharedPreferences = requireContext().getSharedPreferences("student_prefs", Context.MODE_PRIVATE)
+//        val studentId = sharedPreferences.getString("studentId", null)
 
+        val studentId = arguments?.getString("studentId")
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
         viewModel.fetch(studentId.toString())
 

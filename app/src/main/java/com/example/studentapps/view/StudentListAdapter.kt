@@ -40,10 +40,10 @@ class StudentListAdapter(val studentList:ArrayList<Student>):RecyclerView.Adapte
         holder.binding.txtName.text = studentList[position].name
         holder.binding.btnDetail.setOnClickListener {
 
-            val sharedPreferences = it.context.getSharedPreferences("student_prefs", Context.MODE_PRIVATE)
-            sharedPreferences.edit().putString("studentId", studentList[position].id).apply()
+//            val sharedPreferences = it.context.getSharedPreferences("student_prefs", Context.MODE_PRIVATE)
+//            sharedPreferences.edit().putString("studentId", studentList[position].id).apply()
 
-            val action = StudentListFragmentDirections.actionStudentDetailFragment()
+            val action = StudentListFragmentDirections.actionStudentDetailFragment(studentList[position].id.toString())
             Navigation.findNavController(it).navigate(action)
         }
 
