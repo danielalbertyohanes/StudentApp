@@ -65,11 +65,8 @@ class MainActivity : AppCompatActivity() {
             //create notif channel
             createNotificationChannel(this, NotificationManagerCompat.IMPORTANCE_DEFAULT, false, getString(R.string.app_name), "Notification channel for creating new student")
 
-
         }else{
             Log.d("permission", "deny")
         }
-
-
     }
 }
